@@ -47,7 +47,7 @@ function toggleProvider(index) {
 
 async function loadExams() {
     try {
-        const response = await fetch('http://localhost:3000/api/exam/getAllExam');
+        const response = await fetch('https://node-rahul-timbaliya.vercel.app/api/exam/getAllExam');
         const data = await response.json();
 
         if (data.status && data.data) {
@@ -112,7 +112,7 @@ async function openModal(examName, provider, examId) {
     examDetails.innerHTML = '<div class="loading-details">⏳ Loading exam details...</div>';
 
     try {
-        const response = await fetch(`http://localhost:3000/api/exam/getExamById/${examId}`);
+        const response = await fetch(`https://node-rahul-timbaliya.vercel.app/api/exam/getExamById/${examId}`);
         const data = await response.json();
 
         if (data.status && data.data) {
@@ -300,7 +300,7 @@ async function submitSuggestion(event) {
         submitBtn.textContent = 'Submitting...';
         
         // Call your API endpoint here
-        const response = await fetch('http://localhost:3000/api/exam/suggestion', {
+        const response = await fetch('https://node-rahul-timbaliya.vercel.app/api/exam/suggestion', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
