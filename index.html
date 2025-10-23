@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CertVerse - Certification Exams</title>
+    <link rel="stylesheet" href="style/style.css">
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <div class="logo">
+                <span class="logo-icon">🎓</span>
+                <span class="logo-text">CertVerse</span>
+            </div>
+            <p class="tagline">Master Your Certifications • Explore, Learn & Achieve</p>
+        </div>
+    </header>
+
+    <div class="container">
+        <div style="margin-bottom: 30px;">
+            <input type="text" id="searchInput" placeholder="🔍 Search exams across all categories..." style="width: 100%; padding: 14px 18px; border: 2px solid #e1e8ed; border-radius: 8px; font-size: 15px; transition: all 0.3s ease; box-shadow: 0 2px 8px rgba(0,0,0,0.05);" onkeyup="filterExams()">
+            <small style="display: block; margin-top: 8px; color: #95a5a6;">💡 Type exam name to search in real-time</small>
+        </div>
+        <div id="content">
+            <div class="loading">⏳ Loading certification exams...</div>
+        </div>
+    </div>
+
+    <div id="modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header-section">
+                <button class="modal-close" onclick="closeModal()">✕</button>
+                <div class="modal-title" id="modalExamName"></div>
+                <div class="modal-subtitle" id="modalExamProvider"></div>
+            </div>
+            
+            <div class="modal-body" id="examDetails">
+                <div class="loading-details">⏳ Loading exam details...</div>
+            </div>
+            
+            <div class="modal-footer">
+                <button class="action-btn" onclick="closeModal()">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Comment Box Section -->
+    <div class="comment-section">
+        <div class="container">
+            <h2>📝 Suggest an Exam</h2>
+            <form id="suggestionForm" class="suggestion-form">
+                <div class="form-group">
+                    <label for="examName">Exam Name *</label>
+                    <input type="text" id="examName" name="examName" placeholder="Enter exam name" required>
+                    <div class="error-message" id="examNameError"></div>
+                </div>
+                <div class="form-group">
+                    <label for="examProvider">Exam Provider *</label>
+                    <input type="text" id="examProvider" name="examProvider" placeholder="Enter provider name" required>
+                    <div class="error-message" id="examProviderError"></div>
+                </div>
+                <div class="form-group">
+                    <label for="email">Your Email *</label>
+                    <input type="email" id="email" name="email" placeholder="Enter your email" required>
+                    <div class="error-message" id="emailError"></div>
+                </div>
+                <div class="form-group">
+                    <label for="comment">Additional Comments</label>
+                    <textarea id="comment" name="comment" rows="4" placeholder="Any additional details about the exam..."></textarea>
+                </div>
+                <button type="submit" class="submit-btn">Submit Suggestion</button>
+                <div id="formMessage" class="form-message"></div>
+            </form>
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-content">
+            Developed by <span class="footer-name" onclick="visitPortfolio()">Rahul Timbaliya</span> | © 2024 CertVerse ✨
+        </div>
+    </footer>
+
+    <script src="script/script.js"></script>
+</body>
+</html>
