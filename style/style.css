@@ -65,16 +65,26 @@ header {
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
 }
 
-.tagline {
+.tagline, .suggestion-subtitle {
     font-size: 16px;
     color: #7f8c8d;
     font-weight: 400;
+    text-align: center;
+    margin-bottom: 25px;
+    line-height: 1.6;
+}
+
+.suggestion-subtitle {
+    margin-top: -10px;
+    margin-bottom: 30px;
+    color: #64748b;
+    font-size: 15px;
 }
 
 .loading {
     text-align: center;
     padding: 60px 20px;
-    color: #fff;
+    color: #7f8c8d;
     font-size: 16px;
     animation: pulse 1.5s infinite;
 }
@@ -252,7 +262,24 @@ header {
     font-size: 15px;
     color: #34495e;
     font-weight: 500;
-    flex: 1;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.exam-name::before {
+    content: attr(data-number);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 20px;
+    height: 20px;
+    background: #667eea;
+    color: white;
+    border-radius: 50%;
+    font-size: 12px;
+    font-weight: 600;
+    margin-right: 8px;
 }
 
 .view-details-btn {

@@ -79,10 +79,10 @@ function displayExams(providers) {
                                 <div class="expand-icon">▼</div>
                             </div>
                             <div class="exams-container">
-                                ${provider.exams.map((exam) => `
+                                ${provider.exams.map((exam, examIndex) => `
                                     <div class="exam-item" onclick="event.stopPropagation(); openModal('${exam.exam_name.replace(/'/g, "\\'")}', '${exam.exam_provider}', '${exam._id}')">
-                                        <div class="exam-name">✏️ ${exam.exam_name}</div>
-                                        <button class="view-details-btn">View Details →</button>
+                                        <div class="exam-name" data-number="${examIndex + 1}">${exam.exam_name}</div>
+                                        <button class="view-details-btn">View Details</button>
                                     </div>
                                 `).join('')}
                             </div>
@@ -242,48 +242,7 @@ async function submitSuggestion(event) {
     // Disable submit button and show loading state
     submitBtn.disabled = true;
     submitBtn.innerHTML = '<span class="spinner">⏳</span> Submitting...';
-    
-    // Prepare the request data
-    const requestData = {
-        examName: examName.value.trim(),
-        email: email.value.trim(),
-        examProvider: examProvider.value.trim(),
-        comment: comment.value.trim()
-    };
-    
-    try {
-        const response = await fetch('/api/exam/suggestion', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(requestData)
-        });
-        
-        const result = await response.json();
-        
-        if (response.ok) {
-            // Show success message
-            formMessage.textContent = 'Thank you for your suggestion! We will review it soon.';
-            formMessage.className = 'form-message success';
-            formMessage.style.display = 'block';
-            
-            // Reset the form
-            event.target.reset();
-        } else {
-            throw new Error(result.message || 'Failed to submit suggestion');
-        }
-    } catch (error) {
-        console.error('Error submitting suggestion:', error);
-        formMessage.textContent = error.message || 'An error occurred while submitting your suggestion. Please try again.';
-        formMessage.className = 'form-message error';
-        formMessage.style.display = 'block';
-    } finally {
-        // Re-enable submit button and reset its text
-        submitBtn.disabled = false;
-        submitBtn.textContent = 'Submit Suggestion';
-    }
-    
+
     // Prepare the data to send
     const formData = {
         examName: examName.value.trim(),
