@@ -398,6 +398,33 @@ document.addEventListener('DOMContentLoaded', function() {
     if (suggestionForm) {
         suggestionForm.addEventListener('submit', submitSuggestion);
     }
+    // If user email is stored in sessionStorage, prefill the suggestion form email and make it readonly
+    try {
+        if (emailInput) {
+            let sessionEmail = null;
+            const userJson = sessionStorage.getItem('user');
+            if (userJson) {
+                try {
+                    const userObj = JSON.parse(userJson);
+                    sessionEmail = userObj && (userObj.email || userObj.emailAddress || userObj.username || userObj.userEmail) || null;
+                } catch (e) {
+                    // ignore JSON parse errors
+                }
+            }
+            // fallback if email stored separately
+            if (!sessionEmail) sessionEmail = sessionStorage.getItem('email') || null;
+
+            if (sessionEmail) {
+                emailInput.value = sessionEmail;
+                emailInput.setAttribute('readonly', 'readonly');
+                emailInput.setAttribute('aria-readonly', 'true');
+                // optional visual hint - add class if you have styles for it
+                try { emailInput.classList.add('readonly-filled'); } catch (e) {}
+            }
+        }
+    } catch (e) {
+        console.warn('Error pre-filling suggestion email from sessionStorage', e);
+    }
     
     // Load exams
     loadExams();
