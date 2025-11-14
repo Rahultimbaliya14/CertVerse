@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - CertVerse</title>
+    <link rel="stylesheet" href="style/style.css">
+    <link rel="stylesheet" href="style/login.css">
+    <script src="script/prevent.js"></script>
+</head>
+<body class="auth-bg" data-login-endpoint="/api/auth/login">
+
+    <header class="small-header">
+        <div class="small-header-inner">
+            <div class="logo small">
+                <span class="logo-icon">🎓</span>
+                <span class="logo-text">CertVerse</span>
+            </div>
+        </div>
+    </header>
+
+    <main class="container">
+        <section class="auth-card">
+            <div class="auth-grid">
+                <div class="auth-visual">
+                    <div class="lock">🔒</div>
+                    <h2>Secure sign in</h2>
+                    <p class="small muted">Your credentials are encrypted and stored securely. Use a strong password to keep your account safe.</p>
+                    <ul class="security-list">
+                        <li>Privacy first</li>
+                    </ul>
+                </div>
+
+                <div class="auth-form">
+                    <h1>Welcome back to CertVerse</h1>
+                    <p class="muted">🔐 Sign in to access all your exams and related resources.</p>
+
+                    <form id="loginForm" novalidate>
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" placeholder="you@example.com" required>
+                    <div class="error-message" id="emailError"></div>
+                </div>
+
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" name="password" placeholder="Your password" required>
+                    <div class="error-message" id="passwordError"></div>
+                </div>
+
+                <div class="form-actions">
+                    <button type="submit" class="primary-btn" id="loginBtn">Sign In</button>
+                </div>
+
+                <div class="form-message" id="formMessage"></div>
+            </form>
+
+                    <p class="small muted">New to CertVerse? <a href="registration.html">Create an account</a> to get started.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script src="script/login.js"></script>
+</body>
+</html>

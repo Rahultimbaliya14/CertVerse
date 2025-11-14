@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register - CertVerse</title>
+    <link rel="stylesheet" href="style/style.css">
+    <link rel="stylesheet" href="style/registration.css">
+    <script src="script/prevent.js"></script>
+</head>
+<body class="auth-bg" data-register-endpoint="/api/auth/register">
+
+    <header class="small-header">
+        <div class="small-header-inner">
+            <div class="logo small">
+                <span class="logo-icon">🎓</span>
+                <span class="logo-text">CertVerse</span>
+            </div>
+        </div>
+    </header>
+
+    <main class="container">
+        <section class="auth-card">
+            <div class="auth-grid">
+                <div class="auth-visual">
+                    <div class="lock">🔒</div>
+                    <h2>Safe & Private</h2>
+                    <p class="small muted">We protect your data with encryption. Choose a strong password</p>
+                    <ul class="security-list">
+                        <li>Secure password hashing</li>
+                        <li>We never sell your data</li>
+                    </ul>
+                </div>
+
+                <div class="auth-form">
+                    <h1>Create your CertVerse account</h1>
+                    <p class="muted">🚀 Join CertVerse to access practice tests and prepare for certifications.</p>
+
+                    <form id="registerForm" novalidate>
+                <div class="form-group">
+                    <label for="fullName">Full name</label>
+                    <input type="text" id="fullName" name="fullName" placeholder="Your full name" required>
+                    <div class="error-message" id="fullNameError"></div>
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" placeholder="you@example.com" required>
+                    <div class="error-message" id="emailError"></div>
+                </div>
+
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" name="password" placeholder="At least 6 characters" required>
+                    <div class="error-message" id="passwordError"></div>
+                </div>
+
+                <div class="form-group">
+                    <label for="confirmPassword">Confirm password</label>
+                    <input type="password" id="confirmPassword" name="confirmPassword" placeholder="Repeat password" required>
+                    <div class="error-message" id="confirmPasswordError"></div>
+                </div>
+
+                <div class="form-actions">
+                    <button type="submit" class="primary-btn" id="registerBtn">Create account</button>
+                </div>
+
+                <div class="form-message" id="formMessage"></div>
+            </form>
+
+                    <p class="small muted">Already have an account? <a href="login.html">Sign in</a> to continue.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script src="script/registration.js"></script>
+</body>
+</html>
