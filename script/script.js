@@ -1,20 +1,64 @@
 
+// Redirect to login if no session token is present and user lands on index.html
+(function() {
+    try {
+        const token = sessionStorage.getItem('token');
+        const path = window.location.pathname || '';
+        const file = path.split('/').pop().toLowerCase();
+       
+        const onIndex = file === '' || file === 'index.html' || file === 'index.htm';
+        if (onIndex && !token) {
+            window.location.href = 'login.html';
+        }
+    } catch (e) {
+        // ignore errors accessing sessionStorage
+        console.warn('Auth check error', e);
+    }
+})();
+
 let allProviders = [];
+
+// Render auth actions (greeting + logout) in header
+function renderAuthActions() {
+    try {
+        const container = document.getElementById('authActions');
+        if (!container) return;
+        const token = sessionStorage.getItem('token');
+        const userJson = sessionStorage.getItem('user');
+        let user = null;
+        try { user = userJson ? JSON.parse(userJson) : null; } catch (e) { user = null; }
+
+        if (token) {
+            const name = (user && (user.fullName || user.name)) || 'User';
+            container.innerHTML = `
+                <div class="header-user">Hi, <strong>${escapeHtml(name)}</strong></div>
+                <button class="action-btn logout-btn" id="logoutBtn">Logout</button>
+            `;
+            const btn = document.getElementById('logoutBtn');
+            if (btn) btn.addEventListener('click', () => {
+                try { sessionStorage.removeItem('token'); sessionStorage.removeItem('user'); } catch (e) {}
+                window.location.href = 'login.html';
+            });
+        } else {
+            container.innerHTML = `<a href="login.html" class="action-btn">Sign in</a>`;
+        }
+    } catch (e) { console.warn('renderAuthActions error', e); }
+}
+
+// Small helper to avoid injection in header
+function escapeHtml(str) {
+    return String(str).replace(/[&"'<>]/g, (s) => ({'&':'&amp;','"':'&quot;',"'":'&#39;','<':'&lt;','>':'&gt;'}[s]));
+}
+
+// Call immediately to render header
+document.addEventListener('DOMContentLoaded', renderAuthActions);
+// Also call immediately in case script runs after DOM is ready
+try { renderAuthActions(); } catch (e) {}
 
 function visitPortfolio() {
     window.open('https://rahultimbaliya14.github.io/Personal-Portfolio/', '_blank');
 }
 
-document.addEventListener('keydown', (e) => {
-    if (e.key === 'F12' || (e.ctrlKey && e.shiftKey && e.key === 'I') ||
-        (e.ctrlKey && e.shiftKey && e.key === 'J') || (e.ctrlKey && e.key === 'Shift' && e.key === 'C')) {
-        e.preventDefault();
-    }
-});
-
-document.addEventListener('contextmenu', (e) => {
-    e.preventDefault();
-});
 
 function filterExams() {
     const searchTerm = document.getElementById('searchInput').value.toLowerCase().trim();
@@ -47,8 +91,14 @@ function toggleProvider(index) {
 
 async function loadExams() {
     try {
-        const response = await fetch('https://node-rahul-timbaliya.vercel.app/api/exam/getAllExam');
-        const data = await response.json();
+    const token = sessionStorage.getItem('token');
+    const headers = token ? { 'Authorization': `Bearer ${token}` } : {};
+
+    const response = await fetch('https://node-rahul-timbaliya.vercel.app/api/exam/getAllExam', {
+        method: 'GET',
+        headers
+    });
+    const data = await response.json();
 
         if (data.status && data.data) {
             allProviders = data.data;
