@@ -1,18 +1,37 @@
 
 // Redirect to login if no session token is present and user lands on index.html
-(function() {
+(function checkAuthOnLoad() {
     try {
-        const token = sessionStorage.getItem('token');
-        const path = window.location.pathname || '';
-        const file = path.split('/').pop().toLowerCase();
-       
-        const onIndex = file === '' || file === 'index.html' || file === 'index.htm';
-        if (onIndex && !token) {
-            window.location.href = 'login.html';
+        const isIndexPath = () => {
+            const p = window.location.pathname || '/';
+            const file = p.split('/').pop().toLowerCase();
+            // Consider root (/) and explicit index files
+            return p === '/' || p === '' || file === 'index.html' || file === 'index.htm';
+        };
+
+        const redirectIfNeeded = () => {
+            try {
+                const token = sessionStorage.getItem('token');
+                if (isIndexPath() && !token) {
+                    // Use replace to avoid creating history entries
+                    console.debug('[auth] No token found on index — redirecting to login.html');
+                    window.location.replace('login.html');
+                } else {
+                    console.debug('[auth] Token present or not on index — skipping redirect');
+                }
+            } catch (err) {
+                console.warn('[auth] Error reading sessionStorage', err);
+            }
+        };
+
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', redirectIfNeeded);
+        } else {
+            redirectIfNeeded();
         }
     } catch (e) {
-        // ignore errors accessing sessionStorage
-        console.warn('Auth check error', e);
+        // ignore unexpected errors
+        console.warn('Auth check initialization error', e);
     }
 })();
 
