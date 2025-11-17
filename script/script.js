@@ -120,7 +120,7 @@ async function loadExams() {
     const token = sessionStorage.getItem('token');
     const headers = token ? { 'Authorization': `Bearer ${token}` } : {};
 
-    const response = await fetch('https://node-rahul-timbaliya.vercel.app/api/exam/getAllExam', {
+    const response = await fetch(`${baseURL}api/exam/getAllExam`, {
         method: 'GET',
         headers
     });
@@ -188,7 +188,7 @@ async function openModal(examName, provider, examId) {
     examDetails.innerHTML = '<div class="loading-details">⏳ Loading exam details...</div>';
 
     try {
-        const response = await fetch(`https://node-rahul-timbaliya.vercel.app/api/exam/getExamById/${examId}`);
+        const response = await fetch(`${baseURL}api/exam/getExamById/${examId}`);
         const data = await response.json();
 
         if (data.status && data.data) {
@@ -335,7 +335,7 @@ async function submitSuggestion(event) {
         submitBtn.textContent = 'Submitting...';
         
         // Call your API endpoint here
-        const response = await fetch('https://node-rahul-timbaliya.vercel.app/api/exam/suggestion', {
+        const response = await fetch(`${baseURL}api/exam/suggestion`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
