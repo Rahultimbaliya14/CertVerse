@@ -34,7 +34,7 @@ const examSchema = new mongoose.Schema(
       trim: true,
     },
     topics_covered: {
-      type: [String], // Array of topics
+      type: [String], 
       default: [],
     },
   },

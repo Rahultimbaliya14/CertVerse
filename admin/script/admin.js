@@ -162,7 +162,7 @@ document.addEventListener('DOMContentLoaded', function () {
     async function loadSuggestions() {
         showLoader();
         try {
-            const res = await fetch('https://node-rahul-timbaliya.vercel.app/api/exam/getAllExam', {
+            const res = await fetch(`${baseURL}api/exam/getAllExam`, {
                 headers: { 'Authorization': `Bearer ${token}` }
             });
             if (!res.ok) throw new Error('Failed to fetch suggestions');
@@ -194,7 +194,7 @@ document.addEventListener('DOMContentLoaded', function () {
     async function loadCertificates() {
         showLoader();
         try {
-            const res = await fetch('https://node-rahul-timbaliya.vercel.app/api/exam/getAllExam', {
+            const res = await fetch(`${baseURL}api/exam/getAllExam`, {
                 headers: { 'Authorization': `Bearer ${token}` }
             });
             if (!res.ok) throw new Error('Failed to fetch certificates');

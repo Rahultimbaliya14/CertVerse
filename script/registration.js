@@ -30,7 +30,7 @@
     }
 
     const getEndpoint = () => {
-        return 'https://node-rahul-timbaliya.vercel.app/certverse/auth/register';
+        return `${baseURL}certverse/auth/register`;
     };
 
     function validate() {

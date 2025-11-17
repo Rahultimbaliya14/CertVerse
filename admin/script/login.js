@@ -1,4 +1,11 @@
-
+// If already authenticated, redirect to index
+try { 
+    if (localStorage.getItem('adminToken')) {
+         window.location.href = 'index.html';
+         }
+    } catch (e) {
+    console.error('Error checking authentication token:', e);
+     }
 document.addEventListener('keydown', (e) => {
     if (e.key === 'F12' || (e.ctrlKey && e.shiftKey && e.key === 'I') ||
         (e.ctrlKey && e.shiftKey && e.key === 'J') || (e.ctrlKey && e.key === 'Shift' && e.key === 'C')) {
@@ -71,7 +78,7 @@ loginForm.addEventListener('submit', async function (e) {
     errorMessage.style.display = 'none';
 
     try {
-        const response = await fetch('https://node-rahul-timbaliya.vercel.app/auth/login', {
+        const response = await fetch(`${baseURL}certverse/auth/login`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -84,7 +91,10 @@ loginForm.addEventListener('submit', async function (e) {
         if (!response.ok) {
             throw new Error(data.message || 'Login failed');
         }
-
+        if (!data.data.user.isAdmin) {
+            throw new Error('Access denied. Admins only.');
+        }
+        console.log('Login response data:', data);
         if (data.success && data.data?.token) {
             // Save token to localStorage
             localStorage.setItem('adminToken', data.data.token);
@@ -94,7 +104,7 @@ loginForm.addEventListener('submit', async function (e) {
             buttonIcon.innerHTML = '✓';
             loginButton.style.background = '#4CAF50';
 
-            // Redirect after a short delay
+            //Redirect after a short delay
             setTimeout(() => {
                 window.location.href = 'index.html';
             }, 1000);
