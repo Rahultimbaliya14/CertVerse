@@ -2,24 +2,10 @@
 // Redirect to login if no session token is present and user lands on index.html
 (function checkAuthOnLoad() {
     try {
-        const isIndexPath = () => {
-            let p = window.location.pathname || '/';
-            // Normalize trailing slashes
-            p = p.replace(/\/+$|^\s+|\s+$/g, '');
-            // After trimming, if root become empty string
-            if (!p) p = '/';
-
-            // Get last path segment
-            const file = p.split('/').pop().toLowerCase();
-
-            // Consider root (/), 'index' without extension, and explicit index files
-            return p === '/' || file === '' || file === 'index' || file === 'index.html' || file === 'index.htm';
-        };
-
         const redirectIfNeeded = () => {
             try {
                 const token = sessionStorage.getItem('token');
-                if (isIndexPath() && !token) {
+                if (token) {
                     // Use replace to avoid creating history entries
                     console.debug('[auth] No token found on index — redirecting to login.html');
                     window.location.replace('login.html');
