@@ -5,7 +5,7 @@
         const redirectIfNeeded = () => {
             try {
                 const token = sessionStorage.getItem('token');
-                if (token) {
+                if (!token) {
                     // Use replace to avoid creating history entries
                     console.debug('[auth] No token found on index — redirecting to login.html');
                     window.location.replace('login.html');
